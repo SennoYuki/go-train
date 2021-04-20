@@ -21,5 +21,8 @@ import (
 	yes, 这样可以帮助排查问题
 */
 func main() {
-	dao.
+	if err := dao.InitDb(); err != nil {
+		panic(err)
+	}
+	fmt.Println(dao.GetSomethingA())
 }

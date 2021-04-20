@@ -3,10 +3,16 @@ package dao
 import (
 	"database/sql"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
 )
 
 var db *sql.DB
+
+func InitDb() (err error) {
+	db, err = sql.Open("mysql", "root:@tcp(localhost:3306)/train?charset=utf8mb4&timeout=5s")
+	return
+}
 
 // GetUserNum 查询用户数量
 // 查询满足某条件数量的 sql 一般不需要 wrap 和return error, 因为这是符合预期的
