@@ -24,5 +24,10 @@ func main() {
 	if err := dao.InitDb(); err != nil {
 		panic(err)
 	}
-	fmt.Println(dao.GetSomethingA())
+	_, err := dao.GetSomething()
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+		return
+	}
+
 }

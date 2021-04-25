@@ -25,7 +25,7 @@ func GetUserNum(arg ...interface{}) (num int, err error) {
 			err = nil
 			return
 		}
-		err = errors.Wrap(err, "query error")
+		err = errors.Wrapf(err, "query error||sql=%s||arg=%v", query, arg)
 	}
 	return
 }
@@ -39,6 +39,15 @@ func GetUserIdentityNumber(userId int64) (number string, err error) {
 	if err = db.QueryRow(query, userId).Scan(&number); err != nil {
 		err = errors.Wrap(err, "query error")
 	}
+	err = errors.Wrapf(err, "query error||sql=%s||arg=%v", query, userId)
+	return
+}
+
+func GetSomething() (something string, err error) {
+	something, err = GetSomethingA()
+	if err != nil {
+		err = errors.WithMessage(err, "handle GetSomethingA")
+	}
 	return
 }
 
@@ -46,7 +55,7 @@ func GetUserIdentityNumber(userId int64) (number string, err error) {
 func GetSomethingA() (something string, err error) {
 	query := "select 1 from user where 0 limit 1"
 	if err = db.QueryRow(query).Scan(&something); err != nil {
-		err = errors.Wrap(err, "query error")
+		err = errors.Wrapf(err, "query error||sql=%s||arg=%v", query, interface{}(nil))
 	}
 	return
 }
@@ -59,7 +68,7 @@ func GetSomethingB() (something string, err error) {
 			err = nil
 			return
 		}
-		err = errors.Wrap(err, "query error")
+		err = errors.Wrapf(err, "query error||sql=%s||arg=%v", query, interface{}(nil))
 	}
 	return
 }
