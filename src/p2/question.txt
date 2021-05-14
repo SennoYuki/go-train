@@ -1,2 +1,22 @@
 第二章：异常处理
 我们在数据库操作的时候，比如 dao 层中当遇到一个 sql.ErrNoRows 的时候，是否应该 Wrap 这个 error，抛给上层。为什么，应该怎么做请写出代码？
+
+参考答案:
+不要让业务层的判断直接依赖sql/dao层的错误类型, 这样业务层就依赖了dao层的具体实现, 如果dao层可能从sql变成redis或者其他呢
+errors.NotFound是表述查不到的一个通用错误码
+dao:
+
+ return errors.Wrapf(errors.NotFound, fmt.Sprintf("sql: %s error: %v", sql, err))
+
+
+biz:
+
+if errors.Is(err, errors.NotFound} {
+
+}
+
+if errors.Reason(err, xxxx) == xxxx {
+
+}
+
+
