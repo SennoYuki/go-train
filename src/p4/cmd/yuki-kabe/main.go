@@ -1,11 +1,17 @@
 package main
 
 import (
-	v1 "yuki-kabe/api/yuki-kabe/v1"
 	"yuki-kabe/internal/data"
 )
 
 func main() {
-	_ = data.ProviderSet
-	_ = v1.Version
+	initApp()
+}
+
+type App struct {
+	d *data.Data
+}
+
+func newApp(d *data.Data) App {
+	return App{d: d}
 }
