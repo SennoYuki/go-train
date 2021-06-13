@@ -1,0 +1,14 @@
+测试代码见main.go
+共设置10w个key,key 为0-10w的整数,因为过期时间也需要存储,key不设置过期时间
+0B和10B的value size内存一致，推测与redis共享对象有关
+后面随着key的增大,value size外的额外存储空间也在变大,原因尚不清楚
+代码测试结果如下
+base: 1067408B
+value size: 0B, total size: 9048576B, avg size: 90.49B
+value size: 10B, total size: 9048576B, avg size: 90.49B
+value size: 20B, total size: 10648576B, avg size: 106.49B
+value size: 50B, total size: 13848576B, avg size: 138.49B
+value size: 100B, total size: 18648576B, avg size: 186.49B
+value size: 200B, total size: 28248576B, avg size: 282.49B
+value size: 1000B, total size: 108248576B, avg size: 1082.49B
+value size: 5000B, total size: 519477248B, avg size: 5194.77B
